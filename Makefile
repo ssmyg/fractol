@@ -1,10 +1,11 @@
 NAME=fractol
 CFLAGS=-Wall -Wextra -Werror
 SRC_DIR=.
-SRCS=src/main.c
+SRCS=src/main.c src/color.c
 OBJS=$(SRCS:.c=.o)
 MINILIBX_DIR=./minilibx_opengl_20191021/
 MINILIBX=$(MINILIBX_DIR)/libmlx.a
+INCLUDES=-I./includes/ -I$(MINILIBX_DIR)
 
 all: $(NAME)
 
@@ -18,7 +19,7 @@ $(NAME): $(OBJS) $(MINILIBX)
 
 #$(OBJS):
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(MINILIBX_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 #	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
 
 $(MINILIBX):

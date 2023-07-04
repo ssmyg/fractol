@@ -2,6 +2,7 @@
 
 #include "mlx.h"
 //#include <math.h>
+#include "fractol.h"
 #include <stdio.h>
 
 #define WINDOW_X 700
@@ -32,33 +33,6 @@ void	to_z(int w, int h, double *x, double *y)
 	*y = -(double)(h - WINDOW_Y / 2) / 200.0;
 }
 
-int	trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-int	hsv2rgb(int h, int s, int v)
-{
-	int	max;
-	int	min;
-
-	max = v;
-	min = max - (s * max / 255);
-	if (0 <= h && h < 60)
-		return (trgb(0, max, h * (max - min) / 60 + min, min));
-	else if (60 <= h && h < 120)
-		return (trgb(0, (120 - h) * (max - min) / 60, max, min));
-	else if (120 <= h && h < 180)
-		return (trgb(0, min, max, (h - 120) * (max - min) / 60));
-	else if (180 <= h && h < 240)
-		return (trgb(0, min, (240 - h) * (max - min) / 60, max));
-	else if (240 <= h && h < 300)
-		return (trgb(0, (h - 240) * (max - min) / 60, min, max));
-	else
-		return (trgb(0, max, min, (360 - h) * (max - min) / 60));
-}
-
-// int	mandelbrot(double a, double b)
 int	mandelbrot(int w, int h)
 {
 	int		count;
@@ -79,7 +53,7 @@ int	mandelbrot(int w, int h)
 	}
 	if (count == MAX_LOOP)
 		return (0);
-	return (hsv2rgb((200 + count * 7) % 360, 255, 255));
+	return (hsv2rgb(100 + count * 7, 255, 255));
 }
 
 void	drow_axis(t_data *img)
@@ -103,8 +77,8 @@ void	test_hsv(t_data *img)
 	{
 		for (int i = 0; i < WINDOW_X; i++)
 		{
-			if (0 <= i && 0 <= 360)
-				my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
+			//			if (0 <= i && 0 <= 360)
+			my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
 		}
 	}
 }
