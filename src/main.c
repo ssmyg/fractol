@@ -4,20 +4,12 @@
 //#include <math.h>
 #include "fractol.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define WINDOW_X 700
 #define WINDOW_Y 500
 #define MAX_LOOP 1000
 #define MAX_Z 100.0
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -83,15 +75,33 @@ void	test_hsv(t_data *img)
 	}
 }
 
+int	key_hook(int keycode, t_mlx *mlx)
+{
+	printf("--------- key_hook! [%d] ---------\n", keycode);
+	if (keycode == ESC_KEY)
+	{
+		mlx_destroy_window(mlx->mlx, mlx->win);
+		exit(0);
+	}
+	return (0);
+}
+
+int	close(void)
+{
+	printf("--------- close ---------\n");
+	// mlx_destroy_window(mlx->mlx, mlx->win);
+	exit(0);
+	return (0);
+}
+
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
 	t_data	img;
+	t_mlx	mlx;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WINDOW_X, WINDOW_Y, "Mandelbrot");
-	img.img = mlx_new_image(mlx, WINDOW_X, WINDOW_Y);
+	mlx.mlx = mlx_init();
+	mlx.win = mlx_new_window(mlx.mlx, WINDOW_X, WINDOW_Y, "Mandelbrot");
+	img.img = mlx_new_image(mlx.mlx, WINDOW_X, WINDOW_Y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 		&img.endian);
 	for (int j = 0; j < WINDOW_Y; j++)
@@ -103,7 +113,11 @@ int	main(void)
 	}
 	// test_hsv(&img);
 	// drow_axis(&img);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
+	// ESC
+	mlx_key_hook(mlx.win, key_hook, &mlx);
+	// close button
+	mlx_hook(mlx.win, ON_DESTROY, 0, close, &mlx);
+	mlx_loop(mlx.mlx);
 	return (0);
 }
