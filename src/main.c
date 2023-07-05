@@ -6,11 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define WINDOW_X 700
-#define WINDOW_Y 500
-#define MAX_LOOP 1000
-#define MAX_Z 100.0
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -19,20 +14,20 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	to_z(int w, int h, double *x, double *y)
+void	to_z(int w, int h, double *x, double *y, t_vars *vars)
 {
-	*x = (double)(w - WINDOW_X / 2) / 200.0;
-	*y = -(double)(h - WINDOW_Y / 2) / 200.0;
+	*x = ((double)(w - WINDOW_W / 2 + vars->dx)) * vars->scale;
+	*y = -((double)(h - WINDOW_H / 2 + vars->dy)) * vars->scale;
 }
 
-int	mandelbrot(int w, int h)
+int	mandelbrot(int w, int h, t_vars *vars)
 {
 	int		count;
 	double	c[2];
 	double	z[2];
 	double	tmp;
 
-	to_z(w, h, &c[0], &c[1]);
+	to_z(w, h, &c[0], &c[1], vars);
 	count = 0;
 	z[0] = 0;
 	z[1] = 0;
@@ -48,15 +43,15 @@ int	mandelbrot(int w, int h)
 	return (hsv2rgb(100 + count * 7, 255, 255));
 }
 
-void	drow_axis(t_data *img)
+void	drow_axis(t_data *img, t_vars *vars)
 {
 	double	z[2];
 
-	for (int j = 0; j < WINDOW_Y; j++)
+	for (int j = 0; j < WINDOW_H; j++)
 	{
-		for (int i = 0; i < WINDOW_X; i++)
+		for (int i = 0; i < WINDOW_W; i++)
 		{
-			to_z(i, j, &z[0], &z[1]);
+			to_z(i, j, &z[0], &z[1], vars);
 			if (z[0] == 0.0 || z[1] == 0.0)
 				my_mlx_pixel_put(img, i, j, 0x00555555);
 		}
@@ -65,59 +60,131 @@ void	drow_axis(t_data *img)
 
 void	test_hsv(t_data *img)
 {
-	for (int j = 0; j < WINDOW_Y; j++)
+	for (int j = 0; j < WINDOW_H; j++)
 	{
-		for (int i = 0; i < WINDOW_X; i++)
+		for (int i = 0; i < WINDOW_W; i++)
 		{
-			//			if (0 <= i && 0 <= 360)
 			my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
 		}
 	}
 }
 
-int	key_hook(int keycode, t_mlx *mlx)
+int	key_hook(int keycode, t_vars *vars)
 {
 	printf("--------- key_hook! [%d] ---------\n", keycode);
-	if (keycode == ESC_KEY)
+	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(mlx->mlx, mlx->win);
+		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
+	}
+	if ((KEY_LEFT <= keycode && keycode <= KEY_UP) || keycode == KEY_Z
+		|| keycode == KEY_X)
+	{
+		if (keycode == KEY_LEFT)
+			vars->dx += 10;
+		if (keycode == KEY_RIGHT)
+			vars->dx -= 10;
+		if (keycode == KEY_DOWN)
+			vars->dy -= 10;
+		if (keycode == KEY_UP)
+			vars->dy += 10;
+		if (keycode == KEY_Z)
+			vars->scale /= 1.5;
+		if (keycode == KEY_X)
+			vars->scale *= 1.5;
+		drow_mandelbrot(vars);
 	}
 	return (0);
 }
 
-int	close(void)
+int	close(t_vars *vars)
 {
-	printf("--------- close ---------\n");
-	// mlx_destroy_window(mlx->mlx, mlx->win);
+	printf("--------- close ---------  %p\n", vars);
+	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 	return (0);
 }
 
-int	main(void)
+int	mouse_move(int x, int y, t_vars *vars)
+{
+	printf("--------- move [%d, %d] %p\n", x, y, vars);
+	if (vars->down_x >= 0)
+	{
+		vars->dx = vars->down_x - x; // + vars->dx;
+		vars->dy = vars->down_y - y; // + vars->dy;
+		drow_mandelbrot(vars);
+	}
+	return (0);
+}
+
+int	mouse_down(int key, int x, int y, t_vars *vars)
+{
+	printf("--------- down [%d, %d, %d] %p\n", key, x, y, vars);
+	if (key == SCROLL_UP)
+	{
+		// 縮小
+	}
+	else if (key == SCROLL_DOWN)
+	{
+		// 拡大
+	}
+	else if (key == MOUSE_LEFT)
+	{
+		vars->down_x = x + vars->dx;
+		vars->down_y = y + vars->dy;
+	}
+	return (0);
+}
+
+int	mouse_up(int key, int x, int y, t_vars *vars)
+{
+	printf("--------- up [%d, %d, %d] %p\n", key, x, y, vars);
+	if (key == MOUSE_LEFT)
+	{
+		vars->down_x = -1;
+		vars->down_y = -1;
+	}
+	return (0);
+}
+
+void	drow_mandelbrot(t_vars *vars)
 {
 	t_data	img;
-	t_mlx	mlx;
 
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WINDOW_X, WINDOW_Y, "Mandelbrot");
-	img.img = mlx_new_image(mlx.mlx, WINDOW_X, WINDOW_Y);
+	img.img = mlx_new_image(vars->mlx, WINDOW_W, WINDOW_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 		&img.endian);
-	for (int j = 0; j < WINDOW_Y; j++)
+	for (int j = 0; j < WINDOW_H; j++)
 	{
-		for (int i = 0; i < WINDOW_X; i++)
+		for (int i = 0; i < WINDOW_W; i++)
 		{
-			my_mlx_pixel_put(&img, i, j, mandelbrot(i, j));
+			my_mlx_pixel_put(&img, i, j, mandelbrot(i, j, vars));
 		}
 	}
-	// test_hsv(&img);
-	// drow_axis(&img);
-	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
+	mlx_put_image_to_window(vars->mlx, vars->win, img.img, 0, 0);
+}
+
+int	main(void)
+{
+	t_vars	vars;
+
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, WINDOW_W, WINDOW_H, "Mandelbrot");
+	vars.scale = 0.005;
+	vars.dx = 0;
+	vars.dy = 0;
+	vars.down_x = -1;
+	vars.down_y = -1;
+	drow_mandelbrot(&vars);
+	// mouse
+	// mlx_mouse_hook(vars.win, mouse_hook, &mlx);
+	mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
+	mlx_hook(vars.win, ON_MOUSEDOWN, 0, mouse_down, &vars);
+	mlx_hook(vars.win, ON_MOUSEUP, 0, mouse_up, &vars);
 	// ESC
-	mlx_key_hook(mlx.win, key_hook, &mlx);
+	mlx_key_hook(vars.win, key_hook, &vars);
 	// close button
-	mlx_hook(mlx.win, ON_DESTROY, 0, close, &mlx);
-	mlx_loop(mlx.mlx);
+	mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }
