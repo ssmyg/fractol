@@ -6,13 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/05 16:34:12 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/05 18:11:25 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# define KEY_0 29
 # define KEY_Z 6
 # define KEY_X 7
 # define KEY_ESC 53
@@ -61,6 +62,7 @@ typedef struct s_vars
 	int		dx;
 	int		dy;
 
+	int		is_down;
 	int		down_x;
 	int		down_y;
 }			t_vars;

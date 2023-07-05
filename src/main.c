@@ -40,9 +40,9 @@ int	mandelbrot(int w, int h, t_vars *vars)
 	}
 	if (count == MAX_LOOP)
 		return (0);
-	return (hsv2rgb(100 + count * 7, 255, 255));
+	return (hsv2rgb(130 + count * 7, 255, 255));
 }
-
+/*
 void	drow_axis(t_data *img, t_vars *vars)
 {
 	double	z[2];
@@ -57,18 +57,19 @@ void	drow_axis(t_data *img, t_vars *vars)
 		}
 	}
 }
-
+*/
+/*
 void	test_hsv(t_data *img)
 {
 	for (int j = 0; j < WINDOW_H; j++)
 	{
 		for (int i = 0; i < WINDOW_W; i++)
 		{
-			my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
+			// my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
 		}
 	}
 }
-
+*/
 int	key_hook(int keycode, t_vars *vars)
 {
 	printf("--------- key_hook! [%d] ---------\n", keycode);
@@ -76,6 +77,13 @@ int	key_hook(int keycode, t_vars *vars)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
+	}
+	if (keycode == KEY_0)
+	{
+		vars->scale = 0.005;
+		vars->dx = 0;
+		vars->dy = 0;
+		drow_mandelbrot(vars);
 	}
 	if ((KEY_LEFT <= keycode && keycode <= KEY_UP) || keycode == KEY_Z
 		|| keycode == KEY_X)
@@ -107,11 +115,11 @@ int	close(t_vars *vars)
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	printf("--------- move [%d, %d] %p\n", x, y, vars);
-	if (vars->down_x >= 0)
+	printf("--------- move [%d, %d] %p %d\n", x, y, vars, vars->down_x);
+	if (vars->is_down)
 	{
-		vars->dx = vars->down_x - x; // + vars->dx;
-		vars->dy = vars->down_y - y; // + vars->dy;
+		vars->dx = vars->down_x - x;
+		vars->dy = vars->down_y - y;
 		drow_mandelbrot(vars);
 	}
 	return (0);
@@ -122,14 +130,19 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 	printf("--------- down [%d, %d, %d] %p\n", key, x, y, vars);
 	if (key == SCROLL_UP)
 	{
+		vars->scale /= 1.1;
+		drow_mandelbrot(vars);
 		// 縮小
 	}
 	else if (key == SCROLL_DOWN)
 	{
+		vars->scale *= 1.1;
+		drow_mandelbrot(vars);
 		// 拡大
 	}
 	else if (key == MOUSE_LEFT)
 	{
+		vars->is_down = 1;
 		vars->down_x = x + vars->dx;
 		vars->down_y = y + vars->dy;
 	}
@@ -141,8 +154,7 @@ int	mouse_up(int key, int x, int y, t_vars *vars)
 	printf("--------- up [%d, %d, %d] %p\n", key, x, y, vars);
 	if (key == MOUSE_LEFT)
 	{
-		vars->down_x = -1;
-		vars->down_y = -1;
+		vars->is_down = 0;
 	}
 	return (0);
 }
@@ -173,16 +185,17 @@ int	main(void)
 	vars.scale = 0.005;
 	vars.dx = 0;
 	vars.dy = 0;
+	vars.is_down = 0;
 	vars.down_x = -1;
 	vars.down_y = -1;
 	drow_mandelbrot(&vars);
 	// mouse
-	// mlx_mouse_hook(vars.win, mouse_hook, &mlx);
 	mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
 	mlx_hook(vars.win, ON_MOUSEDOWN, 0, mouse_down, &vars);
 	mlx_hook(vars.win, ON_MOUSEUP, 0, mouse_up, &vars);
-	// ESC
+	// key
 	mlx_key_hook(vars.win, key_hook, &vars);
+	// mlx_do_key_autorepeaton(vars.mlx);
 	// close button
 	mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
 	mlx_loop(vars.mlx);
