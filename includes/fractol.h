@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/05 18:11:25 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/06 16:32:24 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
-# define WINDOW_W 700
-# define WINDOW_H 500
-//# define WINDOW_W 1920
-//# define WINDOW_H 1080
+//# define WINDOW_W 700
+//# define WINDOW_H 500
+// # define WINDOW_W 1920
+// # define WINDOW_H 1080
+# define WINDOW_W 1000
+# define WINDOW_H 1000
 # define MAX_LOOP 50
 # define MAX_Z 10.0
 

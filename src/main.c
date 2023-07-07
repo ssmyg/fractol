@@ -1,8 +1,8 @@
 
 
-#include "mlx.h"
-//#include <math.h>
 #include "fractol.h"
+#include "mlx.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,8 +16,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	to_z(int w, int h, double *x, double *y, t_vars *vars)
 {
-	*x = ((double)(w - WINDOW_W / 2 + vars->dx)) * vars->scale;
-	*y = -((double)(h - WINDOW_H / 2 + vars->dy)) * vars->scale;
+	*x = ((double)(w - WINDOW_W / 2 + vars->dx)) / vars->scale * 0.005;
+	*y = -((double)(h - WINDOW_H / 2 + vars->dy)) / vars->scale * 0.005;
 }
 
 int	mandelbrot(int w, int h, t_vars *vars)
@@ -80,7 +80,7 @@ int	key_hook(int keycode, t_vars *vars)
 	}
 	if (keycode == KEY_0)
 	{
-		vars->scale = 0.005;
+		vars->scale = 1;
 		vars->dx = 0;
 		vars->dy = 0;
 		drow_mandelbrot(vars);
@@ -115,7 +115,8 @@ int	close(t_vars *vars)
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	printf("--------- move [%d, %d] %p %d\n", x, y, vars, vars->down_x);
+	printf("--------- move [%d, %d] (%d, %d) %p %d\n", x, y, vars->dx, vars->dy,
+		vars, vars->down_x);
 	if (vars->is_down)
 	{
 		vars->dx = vars->down_x - x;
@@ -127,18 +128,43 @@ int	mouse_move(int x, int y, t_vars *vars)
 
 int	mouse_down(int key, int x, int y, t_vars *vars)
 {
+	int	x2;
+	int	y2;
+	int	dx2;
+	int	dy2;
+
 	printf("--------- down [%d, %d, %d] %p\n", key, x, y, vars);
 	if (key == SCROLL_UP)
 	{
-		vars->scale /= 1.1;
+		// 原点の場合、これでOK
+		// x2 = x - WINDOW_W / 2;
+		// y2 = y - WINDOW_H / 2;
+		x2 = x - WINDOW_W / 2;
+		y2 = y - WINDOW_H / 2;
+		vars->scale *= 1.25;
+		// 原点の場合、これでOK
+		// vars->dx = (x2 * vars->scale - x2);
+		// vars->dy = (y2 * vars->scale - y2);
+		dx2 = (x2 * 1.25 - x2);
+		dy2 = (y2 * 1.25 - y2);
+		vars->dx = vars->dx * 1.25 + dx2;
+		vars->dy = vars->dy * 1.25 + dy2;
+		// vars->dy = (y - WINDOW_H / 2) * vars->scale;
+		printf("--new %d %d", vars->dx, vars->dy);
+		// x = x - WINDOW_W / 2;
+		// y = y - WINDOW_W / 2;
 		drow_mandelbrot(vars);
-		// 縮小
+		// 拡大
 	}
 	else if (key == SCROLL_DOWN)
 	{
-		vars->scale *= 1.1;
+		vars->scale /= 1.1;
+		// vars->dx = (x - WINDOW_W / 2) * vars->scale;
+		// vars->dy = (y - WINDOW_H / 2) * vars->scale;
+		// vars->dx *= 1.1;
+		// vars->dy *= 1.1;
 		drow_mandelbrot(vars);
-		// 拡大
+		// 縮小
 	}
 	else if (key == MOUSE_LEFT)
 	{
@@ -182,7 +208,7 @@ int	main(void)
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WINDOW_W, WINDOW_H, "Mandelbrot");
-	vars.scale = 0.005;
+	vars.scale = 1;
 	vars.dx = 0;
 	vars.dy = 0;
 	vars.is_down = 0;
