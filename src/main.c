@@ -130,41 +130,25 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 {
 	int	x2;
 	int	y2;
-	int	dx2;
-	int	dy2;
 
+	x2 = x - WINDOW_W / 2;
+	y2 = y - WINDOW_H / 2;
 	printf("--------- down [%d, %d, %d] %p\n", key, x, y, vars);
 	if (key == SCROLL_UP)
 	{
-		// 原点の場合、これでOK
-		// x2 = x - WINDOW_W / 2;
-		// y2 = y - WINDOW_H / 2;
-		x2 = x - WINDOW_W / 2;
-		y2 = y - WINDOW_H / 2;
-		vars->scale *= 1.25;
-		// 原点の場合、これでOK
-		// vars->dx = (x2 * vars->scale - x2);
-		// vars->dy = (y2 * vars->scale - y2);
-		dx2 = (x2 * 1.25 - x2);
-		dy2 = (y2 * 1.25 - y2);
-		vars->dx = vars->dx * 1.25 + dx2;
-		vars->dy = vars->dy * 1.25 + dy2;
-		// vars->dy = (y - WINDOW_H / 2) * vars->scale;
-		printf("--new %d %d", vars->dx, vars->dy);
-		// x = x - WINDOW_W / 2;
-		// y = y - WINDOW_W / 2;
-		drow_mandelbrot(vars);
 		// 拡大
+		vars->scale *= ZOOM_RATE;
+		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
+		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
+		drow_mandelbrot(vars);
 	}
 	else if (key == SCROLL_DOWN)
 	{
-		vars->scale /= 1.1;
-		// vars->dx = (x - WINDOW_W / 2) * vars->scale;
-		// vars->dy = (y - WINDOW_H / 2) * vars->scale;
-		// vars->dx *= 1.1;
-		// vars->dy *= 1.1;
-		drow_mandelbrot(vars);
 		// 縮小
+		vars->scale /= ZOOM_RATE;
+		vars->dx = (vars->dx + x2) / ZOOM_RATE - x2;
+		vars->dy = (vars->dy + y2) / ZOOM_RATE - y2;
+		drow_mandelbrot(vars);
 	}
 	else if (key == MOUSE_LEFT)
 	{

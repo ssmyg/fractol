@@ -6,13 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/06 16:32:24 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/07 11:12:36 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+// keyboard
 # define KEY_0 29
 # define KEY_Z 6
 # define KEY_X 7
@@ -22,8 +23,8 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
+// mouse
 # define MOUSE_LEFT 1
-
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
@@ -35,6 +36,8 @@
 # define WINDOW_H 1000
 # define MAX_LOOP 50
 # define MAX_Z 10.0
+
+# define ZOOM_RATE 1.25
 
 enum
 {
