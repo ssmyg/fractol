@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/07 11:12:36 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/10 12:38:59 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
-//# define WINDOW_W 700
-//# define WINDOW_H 500
-// # define WINDOW_W 1920
-// # define WINDOW_H 1080
-# define WINDOW_W 1000
-# define WINDOW_H 1000
-# define MAX_LOOP 50
+# define WINDOW_W 700
+# define WINDOW_H 500
+//# define WINDOW_W 1920
+//# define WINDOW_H 1080
+//# define WINDOW_W 1000
+//# define WINDOW_H 1000
+# define MAX_LOOP 25
+//# define MAX_LOOP 1000
 # define MAX_Z 10.0
 
 # define ZOOM_RATE 1.25
@@ -63,13 +64,21 @@ typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
+
 	double	scale;
-	int		dx;
-	int		dy;
+	// int		dx;
+	// int		dy;
+	double	dx;
+	double	dy;
 
 	int		is_down;
 	int		down_x;
 	int		down_y;
+
+	t_data	img;
+
+	int		progress;
+	int		loop;
 }			t_vars;
 
 int			trgb(int t, int r, int g, int b);
