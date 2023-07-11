@@ -1,7 +1,8 @@
 NAME=fractol
 CFLAGS=-Wall -Wextra -Werror
 SRC_DIR=.
-SRCS=src/main.c src/color.c
+SRCS=src/main.c src/color.c src/keyboard.c src/mouse.c src/window.c src/render.c src/mandelbrot.c
+
 OBJS=$(SRCS:.c=.o)
 MINILIBX_DIR=./minilibx_opengl_20191021/
 MINILIBX=$(MINILIBX_DIR)/libmlx.a
