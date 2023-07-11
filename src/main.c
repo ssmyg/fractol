@@ -1,10 +1,21 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
+/*   Updated: 2023/07/11 12:17:09 by susumuyagi       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx.h"
-#include <math.h>
-#include <stdio.h>
+#include <stdio.h> // 後で消す
 #include <stdlib.h>
+
+void	drow_img(t_vars *vars);
 
 void	init_loop(t_vars *vars, int loop)
 {
@@ -64,7 +75,7 @@ int	key_hook(int keycode, t_vars *vars)
 		vars->scale = 1;
 		vars->dx = 0;
 		vars->dy = 0;
-		drow_mandelbrot(vars);
+		drow_img(vars);
 	}
 	if ((KEY_LEFT <= keycode && keycode <= KEY_UP) || keycode == KEY_Z
 		|| keycode == KEY_X)
@@ -81,7 +92,7 @@ int	key_hook(int keycode, t_vars *vars)
 			vars->scale /= 1.5;
 		if (keycode == KEY_X)
 			vars->scale *= 1.5;
-		drow_mandelbrot(vars);
+		drow_img(vars);
 	}
 	return (0);
 }
@@ -99,7 +110,7 @@ int	mouse_move(int x, int y, t_vars *vars)
 	{
 		vars->dx = vars->down_x - x;
 		vars->dy = vars->down_y - y;
-		drow_mandelbrot(vars);
+		drow_img(vars);
 	}
 	return (0);
 }
@@ -117,7 +128,7 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->scale *= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
-		drow_mandelbrot(vars);
+		drow_img(vars);
 	}
 	else if (key == SCROLL_DOWN)
 	{
@@ -125,7 +136,7 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->scale /= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) / ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) / ZOOM_RATE - y2;
-		drow_mandelbrot(vars);
+		drow_img(vars);
 	}
 	else if (key == MOUSE_LEFT)
 	{
@@ -139,28 +150,12 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 int	mouse_up(int key, int x, int y, t_vars *vars)
 {
 	if (key == MOUSE_LEFT)
-		vars->is_down = 0;
-	return (0);
-}
-
-void	drow_mandelbrot(t_vars *vars)
-{
-	t_data	*img;
-
-	init_loop(vars, INIT_LOOP);
-	img = &vars->img;
-	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-		&img->line_length, &img->endian);
-	for (int j = 0; j < vars->win_h; j++)
 	{
-		for (int i = 0; i < vars->win_w; i++)
-		{
-			my_mlx_pixel_put(img, i, j, mandelbrot(i, j, vars));
-		}
+		vars->is_down = 0;
+		vars->down_x = x + vars->dx;
+		vars->down_y = y + vars->dy;
 	}
-	mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
-	vars->loop += 20;
+	return (0);
 }
 
 char	*get_pixel(int x, int y, t_data *img)
@@ -173,7 +168,7 @@ int	is_complete(t_vars *vars)
 	return (vars->progress >= vars->win_h * vars->win_w - 1);
 }
 
-int	render_next_frame(t_vars *vars)
+int	render_frame(t_vars *vars)
 {
 	t_data	*img;
 	char	*dst;
@@ -195,7 +190,7 @@ int	render_next_frame(t_vars *vars)
 				init_loop(vars, vars->loop * 1.5);
 			return (0);
 		}
-		if (vars->progress > start + 5000000 / vars->loop)
+		if (vars->progress > start + 10000000 / vars->loop)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 			return (0);
@@ -206,6 +201,18 @@ int	render_next_frame(t_vars *vars)
 		vars->progress = n;
 	}
 	return (0);
+}
+
+void	drow_img(t_vars *vars)
+{
+	t_data	*img;
+
+	init_loop(vars, INIT_LOOP);
+	img = &vars->img;
+	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+		&img->line_length, &img->endian);
+	render_frame(vars);
 }
 
 int	main(void)
@@ -223,7 +230,7 @@ int	main(void)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.win_w, vars.win_h, "Mandelbrot");
 	init_loop(&vars, INIT_LOOP);
-	drow_mandelbrot(&vars);
+	drow_img(&vars);
 	// mouse
 	mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
 	mlx_hook(vars.win, ON_MOUSEDOWN, 0, mouse_down, &vars);
@@ -234,7 +241,7 @@ int	main(void)
 	// close button
 	mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
 	// loop
-	mlx_loop_hook(vars.mlx, render_next_frame, &vars);
+	mlx_loop_hook(vars.mlx, render_frame, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
