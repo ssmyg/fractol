@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 10:48:14 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/11 11:45:41 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@
 
 # define WINDOW_W 700
 # define WINDOW_H 500
-//# define WINDOW_W 1920
-//# define WINDOW_H 1080
-//# define WINDOW_W 1000
-//# define WINDOW_H 1000
-# define MAX_LOOP 25
-//# define MAX_LOOP 1000
+
+# define INIT_LOOP 25
+
 # define MAX_Z 10.0
 
 # define ZOOM_RATE 1.25
@@ -77,6 +74,9 @@ typedef struct s_vars
 
 	int			progress;
 	int			loop;
+
+	int			win_w;
+	int			win_h;
 }				t_vars;
 
 int				trgb(int t, int r, int g, int b);

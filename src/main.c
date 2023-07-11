@@ -22,8 +22,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	to_z(int w, int h, double *x, double *y, t_vars *vars)
 {
-	*x = ((double)(w - WINDOW_W / 2 + vars->dx)) / vars->scale * 0.005;
-	*y = -((double)(h - WINDOW_H / 2 + vars->dy)) / vars->scale * 0.005;
+	*x = ((double)(w - vars->win_w / 2 + vars->dx)) / vars->scale * 0.005;
+	*y = -((double)(h - vars->win_h / 2 + vars->dy)) / vars->scale * 0.005;
 }
 
 int	mandelbrot(int w, int h, t_vars *vars)
@@ -51,37 +51,9 @@ int	mandelbrot(int w, int h, t_vars *vars)
 	else
 		return (hsv2rgb(130 + count, 255, 255));
 }
-/*
-void	drow_axis(t_data *img, t_vars *vars)
-{
-	double	z[2];
 
-	for (int j = 0; j < WINDOW_H; j++)
-	{
-		for (int i = 0; i < WINDOW_W; i++)
-		{
-			to_z(i, j, &z[0], &z[1], vars);
-			if (z[0] == 0.0 || z[1] == 0.0)
-				my_mlx_pixel_put(img, i, j, 0x00555555);
-		}
-	}
-}
-*/
-/*
-void	test_hsv(t_data *img)
-{
-	for (int j = 0; j < WINDOW_H; j++)
-	{
-		for (int i = 0; i < WINDOW_W; i++)
-		{
-			// my_mlx_pixel_put(img, i, j, hsv2rgb(i, 255, 255));
-		}
-	}
-}
-*/
 int	key_hook(int keycode, t_vars *vars)
 {
-	printf("--------- key_hook! [%d] ---------\n", keycode);
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -116,7 +88,6 @@ int	key_hook(int keycode, t_vars *vars)
 
 int	close(t_vars *vars)
 {
-	printf("--------- close ---------  %p\n", vars);
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 	return (0);
@@ -124,8 +95,6 @@ int	close(t_vars *vars)
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	printf("--------- move [%d, %d] (%Lf, %Lf) %p %Lf\n", x, y, vars->dx,
-		vars->dy, vars, vars->down_x);
 	if (vars->is_down)
 	{
 		vars->dx = vars->down_x - x;
@@ -140,16 +109,14 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 	int	x2;
 	int	y2;
 
-	x2 = x - WINDOW_W / 2;
-	y2 = y - WINDOW_H / 2;
-	printf("--------- down [%d, %d, %d] %p\n", key, x, y, vars);
+	x2 = x - vars->win_w / 2;
+	y2 = y - vars->win_h / 2;
 	if (key == SCROLL_UP)
 	{
 		// 拡大
 		vars->scale *= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
-		printf("zoom: %Lf %Lf %Lf\n", vars->dx, vars->dy, vars->scale);
 		drow_mandelbrot(vars);
 	}
 	else if (key == SCROLL_DOWN)
@@ -158,7 +125,6 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->scale /= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) / ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) / ZOOM_RATE - y2;
-		printf("zoom: %Lf %Lf %Lf\n", vars->dx, vars->dy, vars->scale);
 		drow_mandelbrot(vars);
 	}
 	else if (key == MOUSE_LEFT)
@@ -172,11 +138,8 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 
 int	mouse_up(int key, int x, int y, t_vars *vars)
 {
-	printf("--------- up [%d, %d, %d] %p\n", key, x, y, vars);
 	if (key == MOUSE_LEFT)
-	{
 		vars->is_down = 0;
-	}
 	return (0);
 }
 
@@ -184,34 +147,20 @@ void	drow_mandelbrot(t_vars *vars)
 {
 	t_data	*img;
 
-	init_loop(vars, MAX_LOOP);
+	init_loop(vars, INIT_LOOP);
 	img = &vars->img;
-	img->img = mlx_new_image(vars->mlx, WINDOW_W, WINDOW_H);
+	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 		&img->line_length, &img->endian);
-	for (int j = 0; j < WINDOW_H; j++)
+	for (int j = 0; j < vars->win_h; j++)
 	{
-		for (int i = 0; i < WINDOW_W; i++)
+		for (int i = 0; i < vars->win_w; i++)
 		{
 			my_mlx_pixel_put(img, i, j, mandelbrot(i, j, vars));
 		}
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 	vars->loop += 20;
-	/*
-		img.img = mlx_new_image(vars->mlx, WINDOW_W, WINDOW_H);
-		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-			&img.line_length,
-			&img.endian);
-		for (int j = 0; j < WINDOW_H; j++)
-		{
-			for (int i = 0; i < WINDOW_W; i++)
-			{
-				my_mlx_pixel_put(&img, i, j, mandelbrot(i, j, vars));
-			}
-		}
-		mlx_put_image_to_window(vars->mlx, vars->win, img.img, 0, 0);
-		*/
 }
 
 char	*get_pixel(int x, int y, t_data *img)
@@ -219,30 +168,10 @@ char	*get_pixel(int x, int y, t_data *img)
 	return (img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8)));
 }
 
-void	init_img(t_vars *vars)
-{
-	t_data	*img;
-
-	img = &vars->img;
-	img->img = mlx_new_image(vars->mlx, WINDOW_W, WINDOW_H);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-		&img->line_length, &img->endian);
-}
-
 int	is_complete(t_vars *vars)
 {
-	return (vars->progress >= WINDOW_H * WINDOW_W - 1);
+	return (vars->progress >= vars->win_h * vars->win_w - 1);
 }
-
-// int	update_progress(t_vars *vars, int x, int y)
-// {
-// 	return (vars->progress = y * WINDOW_W + x);
-// }
-
-// int	progress_y(t_vars *vars)
-// {
-// 	return (vars->progress / WINDOW_W);
-// }
 
 int	render_next_frame(t_vars *vars)
 {
@@ -254,14 +183,14 @@ int	render_next_frame(t_vars *vars)
 
 	start = vars->progress;
 	img = &vars->img;
-	for (int n = vars->progress; n < WINDOW_H * WINDOW_W; n++)
+	for (int n = vars->progress; n < vars->win_h * vars->win_w; n++)
 	{
-		i = n % WINDOW_W;
-		j = n / WINDOW_W;
+		i = n % vars->win_w;
+		j = n / vars->win_w;
 		if (is_complete(vars))
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
-			printf("comp\n");
+			printf("comp %Lf, %d\n", vars->scale, vars->loop);
 			if (vars->loop < 10000000)
 				init_loop(vars, vars->loop * 1.5);
 			return (0);
@@ -283,15 +212,17 @@ int	main(void)
 {
 	t_vars	vars;
 
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WINDOW_W, WINDOW_H, "Mandelbrot");
 	vars.scale = 1.0;
 	vars.dx = 0.0;
 	vars.dy = 0.0;
 	vars.is_down = 0;
 	vars.down_x = 0.0;
 	vars.down_y = 0.0;
-	init_loop(&vars, MAX_LOOP);
+	vars.win_w = WINDOW_W;
+	vars.win_h = WINDOW_H;
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, vars.win_w, vars.win_h, "Mandelbrot");
+	init_loop(&vars, INIT_LOOP);
 	drow_mandelbrot(&vars);
 	// mouse
 	mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
