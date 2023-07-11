@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/10 12:38:59 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/11 10:24:36 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,12 @@ typedef struct s_vars
 	void	*win;
 
 	double	scale;
-	// int		dx;
-	// int		dy;
 	double	dx;
 	double	dy;
 
 	int		is_down;
-	int		down_x;
-	int		down_y;
+	double	down_x;
+	double	down_y;
 
 	t_data	img;
 

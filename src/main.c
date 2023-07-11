@@ -127,7 +127,7 @@ int	close(t_vars *vars)
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	printf("--------- move [%d, %d] (%f, %f) %p %d\n", x, y, vars->dx, vars->dy,
+	printf("--------- move [%d, %d] (%f, %f) %p %f\n", x, y, vars->dx, vars->dy,
 		vars, vars->down_x);
 	if (vars->is_down)
 	{
@@ -242,10 +242,10 @@ int	update_progress(t_vars *vars, int x, int y)
 	return (vars->progress = y * WINDOW_W + x);
 }
 
-int	progress_y(t_vars *vars)
-{
-	return (vars->progress / WINDOW_W);
-}
+// int	progress_y(t_vars *vars)
+// {
+// 	return (vars->progress / WINDOW_W);
+// }
 
 int	render_next_frame(t_vars *vars)
 {
@@ -266,14 +266,14 @@ int	render_next_frame(t_vars *vars)
 			{
 				mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 				printf("comp\n");
-				if (vars->loop < 1000)
-					init_loop(vars, vars->loop + 20);
+				// if (vars->loop < 100000)
+				init_loop(vars, vars->loop * 1.5);
 				return (0);
 			}
 			if (vars->progress >= j * WINDOW_W + i)
 				continue ;
 			// mandelbrot(i, j, vars);
-			if (vars->progress > start + 5000)
+			if (vars->progress > start + 5000000 / vars->loop)
 			{
 				// printf("%d %d ", start, vars->progress);
 				// printf("prog\n");
@@ -298,12 +298,12 @@ int	main(void)
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WINDOW_W, WINDOW_H, "Mandelbrot");
-	vars.scale = 1;
-	vars.dx = 0;
-	vars.dy = 0;
+	vars.scale = 1.0;
+	vars.dx = 0.0;
+	vars.dy = 0.0;
 	vars.is_down = 0;
-	vars.down_x = -1;
-	vars.down_y = -1;
+	vars.down_x = 0.0;
+	vars.down_y = 0.0;
 	init_loop(&vars, MAX_LOOP);
 	drow_mandelbrot(&vars);
 	// mouse
@@ -320,3 +320,8 @@ int	main(void)
 	mlx_loop(vars.mlx);
 	return (0);
 }
+
+// 画像が荒くなる
+//--------- move [427, 537] (-9804279408184684.000000,
+//	-49169586665984112.000000) 0x16b205f00 -46299400465567.914062
+// zoom: -268228477880337312.000000 -13233340686353.125000 671787610756710.12
