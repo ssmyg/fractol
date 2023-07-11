@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 12:17:09 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/11 12:55:17 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,11 +172,11 @@ int	render_frame(t_vars *vars)
 {
 	t_data	*img;
 	char	*dst;
-	int		start;
 	int		i;
 	int		j;
+	int		count;
 
-	start = vars->progress;
+	count = 0;
 	img = &vars->img;
 	for (int n = vars->progress; n < vars->win_h * vars->win_w; n++)
 	{
@@ -190,14 +190,18 @@ int	render_frame(t_vars *vars)
 				init_loop(vars, vars->loop * 1.5);
 			return (0);
 		}
-		if (vars->progress > start + 10000000 / vars->loop)
+		if (count > 5000000)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 			return (0);
 		}
 		dst = get_pixel(i, j, img);
 		if (*dst == 0)
+		{
+			count += vars->loop;
 			*(unsigned int *)dst = mandelbrot(i, j, vars);
+		}
+		count += 1;
 		vars->progress = n;
 	}
 	return (0);
@@ -215,34 +219,40 @@ void	drow_img(t_vars *vars)
 	render_frame(vars);
 }
 
+void	new_window(t_vars *vars)
+{
+	vars->scale = 1.0;
+	vars->dx = 0.0;
+	vars->dy = 0.0;
+	vars->is_down = 0;
+	vars->down_x = 0.0;
+	vars->down_y = 0.0;
+	vars->win_w = WINDOW_W;
+	vars->win_h = WINDOW_H;
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, vars->win_w, vars->win_h,
+		"Mandelbrot");
+}
+
+void	set_hooks(t_vars *vars)
+{
+	mlx_hook(vars->win, ON_MOUSEMOVE, 0, mouse_move, vars);
+	mlx_hook(vars->win, ON_MOUSEDOWN, 0, mouse_down, vars);
+	mlx_hook(vars->win, ON_MOUSEUP, 0, mouse_up, vars);
+	mlx_key_hook(vars->win, key_hook, vars);
+	mlx_do_key_autorepeaton(vars->mlx);
+	mlx_hook(vars->win, ON_DESTROY, 0, close, vars);
+	mlx_loop_hook(vars->mlx, render_frame, vars);
+	mlx_loop(vars->mlx);
+}
 int	main(void)
 {
 	t_vars	vars;
 
-	vars.scale = 1.0;
-	vars.dx = 0.0;
-	vars.dy = 0.0;
-	vars.is_down = 0;
-	vars.down_x = 0.0;
-	vars.down_y = 0.0;
-	vars.win_w = WINDOW_W;
-	vars.win_h = WINDOW_H;
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, vars.win_w, vars.win_h, "Mandelbrot");
+	new_window(&vars);
 	init_loop(&vars, INIT_LOOP);
 	drow_img(&vars);
-	// mouse
-	mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
-	mlx_hook(vars.win, ON_MOUSEDOWN, 0, mouse_down, &vars);
-	mlx_hook(vars.win, ON_MOUSEUP, 0, mouse_up, &vars);
-	// key
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_do_key_autorepeaton(vars.mlx);
-	// close button
-	mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
-	// loop
-	mlx_loop_hook(vars.mlx, render_frame, &vars);
-	mlx_loop(vars.mlx);
+	set_hooks(&vars);
 	return (0);
 }
 
