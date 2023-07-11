@@ -46,13 +46,10 @@ int	mandelbrot(int w, int h, t_vars *vars)
 	}
 	if (count == vars->loop)
 		return (0);
-	// return (hsv2rgb(130 + count * 7 , 255, 255));
 	if (count < 50)
 		return (hsv2rgb(130 + count * 7, 255, 255));
-	else // if (count < 200)
+	else
 		return (hsv2rgb(130 + count, 255, 255));
-	// return (hsv2rgb(130 + 100 / count, 255, 255));
-	// return (hsv2rgb(100, count * 2 % 255, 255));
 }
 /*
 void	drow_axis(t_data *img, t_vars *vars)
@@ -127,8 +124,8 @@ int	close(t_vars *vars)
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	printf("--------- move [%d, %d] (%f, %f) %p %f\n", x, y, vars->dx, vars->dy,
-		vars, vars->down_x);
+	printf("--------- move [%d, %d] (%Lf, %Lf) %p %Lf\n", x, y, vars->dx,
+		vars->dy, vars, vars->down_x);
 	if (vars->is_down)
 	{
 		vars->dx = vars->down_x - x;
@@ -152,7 +149,7 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->scale *= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
-		printf("zoom: %f %f %.2f\n", vars->dx, vars->dy, vars->scale);
+		printf("zoom: %Lf %Lf %Lf\n", vars->dx, vars->dy, vars->scale);
 		drow_mandelbrot(vars);
 	}
 	else if (key == SCROLL_DOWN)
@@ -161,7 +158,7 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->scale /= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) / ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) / ZOOM_RATE - y2;
-		printf("zoom: %f %f %.2f\n", vars->dx, vars->dy, vars->scale);
+		printf("zoom: %Lf %Lf %Lf\n", vars->dx, vars->dy, vars->scale);
 		drow_mandelbrot(vars);
 	}
 	else if (key == MOUSE_LEFT)
@@ -237,10 +234,10 @@ int	is_complete(t_vars *vars)
 	return (vars->progress >= WINDOW_H * WINDOW_W - 1);
 }
 
-int	update_progress(t_vars *vars, int x, int y)
-{
-	return (vars->progress = y * WINDOW_W + x);
-}
+// int	update_progress(t_vars *vars, int x, int y)
+// {
+// 	return (vars->progress = y * WINDOW_W + x);
+// }
 
 // int	progress_y(t_vars *vars)
 // {
@@ -252,43 +249,33 @@ int	render_next_frame(t_vars *vars)
 	t_data	*img;
 	char	*dst;
 	int		start;
+	int		i;
+	int		j;
 
 	start = vars->progress;
 	img = &vars->img;
-	// 初期化
-	if (0)
-		init_img(vars);
-	for (int j = 0; j < WINDOW_H; j++)
+	for (int n = vars->progress; n < WINDOW_H * WINDOW_W; n++)
 	{
-		for (int i = 0; i < WINDOW_W; i++)
+		i = n % WINDOW_W;
+		j = n / WINDOW_W;
+		if (is_complete(vars))
 		{
-			if (is_complete(vars))
-			{
-				mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
-				printf("comp\n");
-				// if (vars->loop < 100000)
+			mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
+			printf("comp\n");
+			if (vars->loop < 10000000)
 				init_loop(vars, vars->loop * 1.5);
-				return (0);
-			}
-			if (vars->progress >= j * WINDOW_W + i)
-				continue ;
-			// mandelbrot(i, j, vars);
-			if (vars->progress > start + 5000000 / vars->loop)
-			{
-				// printf("%d %d ", start, vars->progress);
-				// printf("prog\n");
-				mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
-				return (0);
-			}
-			dst = get_pixel(i, j, img);
-			if (*dst == 0)
-				*(unsigned int *)dst = mandelbrot(i, j, vars);
-			//*(unsigned int *)dst = 0x00FF0000;
-			// my_mlx_pixel_put(&img, i, j, mandelbrot(i, j, vars));
-			update_progress(vars, i, j);
+			return (0);
 		}
+		if (vars->progress > start + 5000000 / vars->loop)
+		{
+			mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
+			return (0);
+		}
+		dst = get_pixel(i, j, img);
+		if (*dst == 0)
+			*(unsigned int *)dst = mandelbrot(i, j, vars);
+		vars->progress = n;
 	}
-	// mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 	return (0);
 }
 

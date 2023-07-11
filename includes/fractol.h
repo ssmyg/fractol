@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 10:24:36 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/11 10:48:14 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,34 +53,34 @@ enum
 
 typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_data;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_data;
 
 typedef struct s_vars
 {
-	void	*mlx;
-	void	*win;
+	void		*mlx;
+	void		*win;
 
-	double	scale;
-	double	dx;
-	double	dy;
+	long double	scale;
+	long double	dx;
+	long double	dy;
 
-	int		is_down;
-	double	down_x;
-	double	down_y;
+	int			is_down;
+	long double	down_x;
+	long double	down_y;
 
-	t_data	img;
+	t_data		img;
 
-	int		progress;
-	int		loop;
-}			t_vars;
+	int			progress;
+	int			loop;
+}				t_vars;
 
-int			trgb(int t, int r, int g, int b);
-int			hsv2rgb(int h, int s, int v);
-void		drow_mandelbrot(t_vars *vars);
+int				trgb(int t, int r, int g, int b);
+int				hsv2rgb(int h, int s, int v);
+void			drow_mandelbrot(t_vars *vars);
 
 #endif
