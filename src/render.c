@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 14:47:02 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 11:51:31 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	init_loop(t_vars *vars, int loop)
 {
 	vars->progress = 0;
 	vars->loop = loop;
-	if (loop < 0)
-		vars->loop = INT_MAX;
+	if (loop < 0 || 1000000 < loop)
+		vars->loop = 1000000;
 }
 
 static int	calc_pixel(int n, t_vars *vars)
@@ -43,7 +43,7 @@ static int	calc_pixel(int n, t_vars *vars)
 	dst = get_pixel(i, j, &vars->img);
 	if (*dst == 0)
 	{
-		*(unsigned int *)dst = mandelbrot(i, j, vars);
+		*(unsigned int *)dst = julia(i, j, vars);
 		return (vars->loop);
 	}
 	return (1);
@@ -61,7 +61,7 @@ int	render_frame(t_vars *vars)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 			if (is_complete(vars))
-				init_loop(vars, vars->loop * 1.5);
+				init_loop(vars, vars->loop * 2);
 			return (0);
 		}
 		count += calc_pixel(n, vars);

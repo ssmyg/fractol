@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 14:24:56 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 11:55:05 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 # define INIT_LOOP 25
 
-# define MAX_Z 10.0
+# define MAX_Z 4.0
 
 # define ZOOM_RATE 1.25
 
@@ -102,5 +102,6 @@ int				close(t_vars *vars);
 void			to_z(int w, int h, double z[], t_vars *vars);
 
 int				mandelbrot(int w, int h, t_vars *vars);
+int				julia(int w, int h, t_vars *vars);
 
 #endif
