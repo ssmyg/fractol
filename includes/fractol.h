@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:45:17 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 13:29:07 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void					to_z(int w, int h, double z[], t_vars *vars);
 
 int						mandelbrot(int w, int h, t_vars *vars);
 int						julia(int w, int h, t_vars *vars);
+int						sierpinski(int w, int h, t_vars *vars);
 
 #endif
