@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:21:48 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:44:45 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	init_vars(t_vars *vars)
 	vars->win = mlx_new_window(vars->mlx, vars->win_w, vars->win_h,
 		"Mandelbrot");
 	vars->color = 120;
+	// vars->model = mandelbrot;
+	vars->model = julia;
 }
 
 void	set_hooks(t_vars *vars)

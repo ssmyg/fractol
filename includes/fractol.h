@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:29:45 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:45:17 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,58 +51,61 @@ enum
 
 typedef struct s_data
 {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_data;
+	void				*img;
+	char				*addr;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+}						t_data;
 
-typedef struct s_vars
+typedef struct s_vars	t_vars;
+
+struct					s_vars
 {
-	void		*mlx;
-	void		*win;
+	void				*mlx;
+	void				*win;
 
-	long double	scale;
-	long double	dx;
-	long double	dy;
+	long double			scale;
+	long double			dx;
+	long double			dy;
 
-	int			is_down;
-	long double	down_x;
-	long double	down_y;
+	int					is_down;
+	long double			down_x;
+	long double			down_y;
 
-	t_data		img;
+	t_data				img;
 
-	int			progress;
-	int			loop;
+	int					progress;
+	int					loop;
 
-	int			win_w;
-	int			win_h;
+	int					win_w;
+	int					win_h;
 
-	int			color;
-}				t_vars;
+	int					color;
+	int					(*model)(int, int, t_vars *);
+};
 
-int				trgb(int t, int r, int g, int b);
-int				hsv2rgb(int h, int s, int v);
-void			drow_mandelbrot(t_vars *vars);
+int						trgb(int t, int r, int g, int b);
+int						hsv2rgb(int h, int s, int v);
+void					drow_mandelbrot(t_vars *vars);
 
-int				mouse_move(int x, int y, t_vars *vars);
-int				mouse_down(int key, int x, int y, t_vars *vars);
-int				mouse_up(int key, int x, int y, t_vars *vars);
+int						mouse_move(int x, int y, t_vars *vars);
+int						mouse_down(int key, int x, int y, t_vars *vars);
+int						mouse_up(int key, int x, int y, t_vars *vars);
 
-int				key_hook(int keycode, t_vars *vars);
+int						key_hook(int keycode, t_vars *vars);
 
-void			drow_img(t_vars *vars);
+void					drow_img(t_vars *vars);
 
-int				render_frame(t_vars *vars);
+int						render_frame(t_vars *vars);
 
-void			init_vars(t_vars *vars);
-void			set_hooks(t_vars *vars);
-int				close(t_vars *vars);
+void					init_vars(t_vars *vars);
+void					set_hooks(t_vars *vars);
+int						close(t_vars *vars);
 
-void			to_z(int w, int h, double z[], t_vars *vars);
+void					to_z(int w, int h, double z[], t_vars *vars);
 
-int				mandelbrot(int w, int h, t_vars *vars);
-int				julia(int w, int h, t_vars *vars);
+int						mandelbrot(int w, int h, t_vars *vars);
+int						julia(int w, int h, t_vars *vars);
 
 #endif

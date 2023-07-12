@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:20:13 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:43:41 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static int	calc_pixel(int n, t_vars *vars)
 	dst = get_pixel(i, j, &vars->img);
 	if (*dst == 0)
 	{
-		count = julia(i, j, vars);
-		// count = mandelbrot(i, j, vars);
+		count = vars->model(i, j, vars);
 		if (count >= 0)
 			color = hsv2rgb(vars->color + sqrt(count * 10) * 10, 255, 255);
 		else
