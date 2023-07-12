@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 11:53:07 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:12:00 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ int	julia(int w, int h, t_vars *vars)
 		count++;
 	}
 	if (count == vars->loop)
-		return (0);
-	// if (count < 50)
-	return (hsv2rgb(100 + count * 7, 255, 255));
-	//	return (hsv2rgb(130 + count * 7, 255, 255));
-	// else
-	//		return (hsv2rgb(130 + count, 255, 255));
-	// return (hsv2rgb(130 + count, 255, 255));
+		return (-1);
+	return (count);
 }

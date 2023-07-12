@@ -6,13 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 11:51:31 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:20:13 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx.h"
 #include <limits.h>
+#include <math.h>
 
 char	*get_pixel(int x, int y, t_data *img)
 {
@@ -37,17 +38,26 @@ static int	calc_pixel(int n, t_vars *vars)
 	char	*dst;
 	int		i;
 	int		j;
+	int		count;
+	int		color;
 
 	i = n % vars->win_w;
 	j = n / vars->win_w;
 	dst = get_pixel(i, j, &vars->img);
 	if (*dst == 0)
 	{
-		*(unsigned int *)dst = julia(i, j, vars);
+		count = julia(i, j, vars);
+		// count = mandelbrot(i, j, vars);
+		if (count >= 0)
+			color = hsv2rgb(vars->color + sqrt(count * 10) * 10, 255, 255);
+		else
+			color = 0;
+		*(unsigned int *)dst = color;
 		return (vars->loop);
 	}
 	return (1);
 }
+
 int	render_frame(t_vars *vars)
 {
 	int	count;

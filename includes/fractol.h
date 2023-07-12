@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 11:55:05 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:29:45 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define KEY_0 29
 # define KEY_Z 6
 # define KEY_X 7
+# define KEY_C 8
 # define KEY_ESC 53
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -34,9 +35,7 @@
 //# define WINDOW_H 1080
 
 # define INIT_LOOP 25
-
-# define MAX_Z 4.0
-
+# define MAX_Z 6.0
 # define ZOOM_RATE 1.25
 
 enum
@@ -79,6 +78,8 @@ typedef struct s_vars
 
 	int			win_w;
 	int			win_h;
+
+	int			color;
 }				t_vars;
 
 int				trgb(int t, int r, int g, int b);

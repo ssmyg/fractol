@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:08:16 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 13:08:17 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 12:32:47 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESC)
 		close(vars);
+	if (keycode == KEY_C)
+	{
+		vars->color = (vars->color + 10) % 360;
+		drow_img(vars);
+	}
 	if (keycode == KEY_0)
 	{
 		vars->scale = 1.0;
