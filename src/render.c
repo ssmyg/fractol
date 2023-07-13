@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:43:41 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 11:19:56 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	render_frame(t_vars *vars)
 	n = vars->progress;
 	while (n < vars->win_h * vars->win_w)
 	{
-		if (is_complete(vars) || count > 5000000)
+		if (is_complete(vars) || count > 6000000)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 			if (is_complete(vars))
@@ -86,6 +86,8 @@ void	drow_img(t_vars *vars)
 
 	init_loop(vars, INIT_LOOP);
 	img = &vars->img;
+	if (img->img)
+		mlx_destroy_image(vars->mlx, img->img);
 	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 		&img->line_length, &img->endian);

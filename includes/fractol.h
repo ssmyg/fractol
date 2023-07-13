@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 13:29:07 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 11:50:41 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 // keyboard
 # define KEY_0 29
-# define KEY_Z 6
-# define KEY_X 7
 # define KEY_C 8
 # define KEY_ESC 53
 # define KEY_LEFT 123
@@ -100,13 +98,16 @@ void					drow_img(t_vars *vars);
 int						render_frame(t_vars *vars);
 
 void					init_vars(t_vars *vars);
+void					init_window(t_vars *vars);
 void					set_hooks(t_vars *vars);
-int						close(t_vars *vars);
+int						window_close(t_vars *vars);
 
 void					to_z(int w, int h, double z[], t_vars *vars);
 
 int						mandelbrot(int w, int h, t_vars *vars);
 int						julia(int w, int h, t_vars *vars);
 int						sierpinski(int w, int h, t_vars *vars);
+
+int						set_arg(int argc, char *argv[], t_vars *vars);
 
 #endif

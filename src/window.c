@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 15:19:02 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 11:33:45 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void	init_vars(t_vars *vars)
 	vars->down_y = 0.0;
 	vars->win_w = WINDOW_W;
 	vars->win_h = WINDOW_H;
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, vars->win_w, vars->win_h,
-		"Mandelbrot");
 	vars->color = 120;
-	// vars->model = mandelbrot;
-	vars->model = julia;
-	// vars->model = sierpinski;
+	vars->model = NULL;
+	vars->img.img = NULL;
+}
+
+void	init_window(t_vars *vars)
+{
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, vars->win_w, vars->win_h, "fractol");
 }
 
 void	set_hooks(t_vars *vars)
@@ -40,13 +42,14 @@ void	set_hooks(t_vars *vars)
 	mlx_hook(vars->win, ON_MOUSEUP, 0, mouse_up, vars);
 	mlx_key_hook(vars->win, key_hook, vars);
 	mlx_do_key_autorepeaton(vars->mlx);
-	mlx_hook(vars->win, ON_DESTROY, 0, close, vars);
+	mlx_hook(vars->win, ON_DESTROY, 0, window_close, vars);
 	mlx_loop_hook(vars->mlx, render_frame, vars);
 	mlx_loop(vars->mlx);
 }
 
-int	close(t_vars *vars)
+int	window_close(t_vars *vars)
 {
+	mlx_destroy_image(vars->mlx, vars->img.img);
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 	return (0);

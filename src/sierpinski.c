@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 14:39:31 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/12 16:20:31 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	func(double x, double y, int depth, int max)
 
 	t = pow(0.5, depth);
 	if (depth > max)
-		return (100);
+		return (max * 17);
 	if (x < 0)
 		return (-1);
 	if (y < 0)
