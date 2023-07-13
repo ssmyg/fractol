@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 11:50:41 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 14:59:32 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 // keyboard
 # define KEY_0 29
 # define KEY_C 8
+# define KEY_R 15
+# define KEY_I 34
 # define KEY_ESC 53
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -70,6 +72,7 @@ struct					s_vars
 	int					is_down;
 	long double			down_x;
 	long double			down_y;
+	int					keycode;
 
 	t_data				img;
 
@@ -81,6 +84,7 @@ struct					s_vars
 
 	int					color;
 	int					(*model)(int, int, t_vars *);
+	long double			c[2];
 };
 
 int						trgb(int t, int r, int g, int b);

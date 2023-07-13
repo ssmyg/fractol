@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 11:33:45 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 14:53:33 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ void	init_vars(t_vars *vars)
 	vars->is_down = 0;
 	vars->down_x = 0.0;
 	vars->down_y = 0.0;
+	vars->keycode = 0;
 	vars->win_w = WINDOW_W;
 	vars->win_h = WINDOW_H;
 	vars->color = 120;
 	vars->model = NULL;
 	vars->img.img = NULL;
+	vars->c[0] = -0.30;
+	vars->c[1] = -0.63;
 }
 
 void	init_window(t_vars *vars)

@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 12:12:00 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 13:47:07 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	julia(int w, int h, t_vars *vars)
 	z[1] = c[1];
 	while (z[0] * z[0] + z[1] * z[1] < MAX_Z && count < vars->loop)
 	{
-		tmp = z[0] * z[0] - z[1] * z[1] - 0.3;
-		z[1] = 2.0 * z[0] * z[1] - 0.63;
+		tmp = z[0] * z[0] - z[1] * z[1] + vars->c[0];
+		z[1] = 2.0 * z[0] * z[1] + vars->c[1];
 		z[0] = tmp;
 		count++;
 	}
