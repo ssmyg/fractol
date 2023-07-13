@@ -2,26 +2,24 @@ NAME=fractol
 CFLAGS=-Wall -Wextra -Werror
 SRC_DIR=.
 SRCS=src/main.c src/color.c src/keyboard.c src/mouse.c src/window.c src/render.c \
-	src/mandelbrot.c src/julia.c src/sierpinski.c
+	src/mandelbrot.c src/julia.c src/sierpinski.c src/arg.c
 OBJS=$(SRCS:.c=.o)
-MINILIBX_DIR=./minilibx_opengl_20191021/
+LIBFT_DIR=./libft
+LIBFT=$(LIBFT_DIR)/libft.a
+MINILIBX_DIR=./minilibx_opengl_20191021
 MINILIBX=$(MINILIBX_DIR)/libmlx.a
-INCLUDES=-I./includes/ -I$(MINILIBX_DIR)
+INCLUDES=-I./includes/ -I$(MINILIBX_DIR) -I$(LIBFT_DIR)
 
 all: $(NAME)
 
-#$(NAME): $(OBJS)
-#	$(CC) -o $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(MINILIBX) $(LIBFT)
+	$(CC) $(OBJS) -L$(MINILIBX_DIR) -L$(LIBFT_DIR) -lm -lft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
-$(NAME): $(OBJS) $(MINILIBX)
-	$(CC) $(OBJS) -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-#	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-
-
-#$(OBJS):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-#	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(MINILIBX):
 	$(MAKE) -C $(MINILIBX_DIR)
@@ -30,9 +28,11 @@ $(MINILIBX):
 
 clean:
 	$(RM) $(OBJS)
-	$(MAKE) -C $(MINILIBX_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)
+	$(MAKE) -C $(MINILIBX_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
