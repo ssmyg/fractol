@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:10:59 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:51:30 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 17:07:57 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ void	scroll_up(int x2, int y2, t_vars *vars)
 		vars->c[0] += 0.005;
 		if (vars->c[0] > 2.0)
 			vars->c[0] -= 4.0;
-		drow_img(vars);
 	}
 	else if (vars->keycode == KEY_I)
 	{
 		vars->c[1] += 0.005;
 		if (vars->c[1] > 2.0)
 			vars->c[1] -= 4.0;
-		drow_img(vars);
 	}
+	else if (vars->keycode == KEY_C)
+		vars->color = (vars->color + 1) % 360;
 	else
 	{
 		vars->scale *= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
-		drow_img(vars);
 	}
+	drow_img(vars);
 }
 
 void	scroll_down(int x2, int y2, t_vars *vars)
@@ -58,22 +58,26 @@ void	scroll_down(int x2, int y2, t_vars *vars)
 		vars->c[0] -= 0.005;
 		if (vars->c[0] < -2.0)
 			vars->c[0] += 4.0;
-		drow_img(vars);
 	}
 	else if (vars->keycode == KEY_I)
 	{
 		vars->c[1] -= 0.005;
 		if (vars->c[1] < -2.0)
 			vars->c[1] += 4.0;
-		drow_img(vars);
+	}
+	else if (vars->keycode == KEY_C)
+	{
+		vars->color -= 1;
+		if (vars->color < 0)
+			vars->color = 360;
 	}
 	else
 	{
 		vars->scale /= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) / ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) / ZOOM_RATE - y2;
-		drow_img(vars);
 	}
+	drow_img(vars);
 }
 
 int	mouse_down(int key, int x, int y, t_vars *vars)
