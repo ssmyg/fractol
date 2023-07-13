@@ -6,11 +6,12 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:08:16 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 11:52:09 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 15:35:44 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <stdio.h>
 
 int	key_hook(int keycode, t_vars *vars)
 {
@@ -27,6 +28,22 @@ int	key_hook(int keycode, t_vars *vars)
 		vars->dx = 0.0;
 		vars->dy = 0.0;
 		drow_img(vars);
+	}
+	if (keycode == KEY_Z)
+		vars->keycode = KEY_Z;
+	if (keycode == KEY_R)
+	{
+		if (vars->keycode == KEY_R)
+			vars->keycode = 0;
+		else
+			vars->keycode = KEY_R;
+	}
+	if (keycode == KEY_I)
+	{
+		if (vars->keycode == KEY_I)
+			vars->keycode = 0;
+		else
+			vars->keycode = KEY_I;
 	}
 	if (KEY_LEFT <= keycode && keycode <= KEY_UP)
 	{

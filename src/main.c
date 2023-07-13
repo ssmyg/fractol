@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 12:43:45 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 15:09:20 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ DESCRIPTION\n\
 	param2	parameter2 for Julia set (imaginary part)\n\
 \n\
 PARAMETER\n\
-	format	\"d.dddd\" (e.g. 1.2345)\n\
-	range	-2.0000 <= param <= 2.0000)\n\
+	Parameters are used only if Julia is selected as the model.\n\
+\n\
+	format	\"(+|-)d.dddd\" (e.g. +1.2345)\n\
+	range	-2.0000 <= param <= +2.0000)\n\
 \n\
 USAGE\n\
 	arrow	move the view\n\

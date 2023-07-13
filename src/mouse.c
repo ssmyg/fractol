@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:10:59 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/11 13:11:00 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 15:28:11 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,40 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 
 	x2 = x - vars->win_w / 2;
 	y2 = y - vars->win_h / 2;
-	if (key == SCROLL_UP)
+	if (key == SCROLL_UP && vars->keycode == KEY_R)
+	{
+		vars->c[0] += 0.005;
+		if (vars->c[0] > 2.0)
+			vars->c[0] -= 4.0;
+		drow_img(vars);
+	}
+	else if (key == SCROLL_UP && vars->keycode == KEY_I)
+	{
+		vars->c[1] += 0.005;
+		if (vars->c[1] > 2.0)
+			vars->c[1] -= 4.0;
+		drow_img(vars);
+	}
+	else if (key == SCROLL_UP)
 	{
 		// 拡大
 		vars->scale *= ZOOM_RATE;
 		vars->dx = (vars->dx + x2) * ZOOM_RATE - x2;
 		vars->dy = (vars->dy + y2) * ZOOM_RATE - y2;
+		drow_img(vars);
+	}
+	else if (key == SCROLL_DOWN && vars->keycode == KEY_R)
+	{
+		vars->c[0] -= 0.005;
+		if (vars->c[0] < -2.0)
+			vars->c[0] += 4.0;
+		drow_img(vars);
+	}
+	else if (key == SCROLL_DOWN && vars->keycode == KEY_I)
+	{
+		vars->c[1] -= 0.005;
+		if (vars->c[1] < -2.0)
+			vars->c[1] += 4.0;
 		drow_img(vars);
 	}
 	else if (key == SCROLL_DOWN)

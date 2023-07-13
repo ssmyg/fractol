@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 14:59:32 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 15:23:47 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define KEY_C 8
 # define KEY_R 15
 # define KEY_I 34
+# define KEY_Z 6
 # define KEY_ESC 53
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
