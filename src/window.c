@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:18:44 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:51:12 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "keyboard.h"
 #include "mlx.h"
 #include "mouse.h"
+#include "render.h"
 #include "window.h"
 #include <stdlib.h>
 

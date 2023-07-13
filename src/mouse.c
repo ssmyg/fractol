@@ -6,13 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:10:59 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:00:57 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:51:30 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "render.h"
 
 int	mouse_move(int x, int y, t_vars *vars)
 {

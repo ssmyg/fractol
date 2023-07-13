@@ -6,17 +6,18 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:15:39 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:48:22 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "color.h"
 #include "fractol.h"
 #include "mlx.h"
 #include "model.h"
 #include <limits.h>
 #include <math.h>
 
-char	*get_pixel(int x, int y, t_data *img)
+static char	*get_pixel(int x, int y, t_data *img)
 {
 	return (img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8)));
 }

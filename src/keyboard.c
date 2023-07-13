@@ -6,14 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:08:16 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:19:24 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:52:43 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "keyboard.h"
+#include "render.h"
 #include "window.h"
-#include <stdio.h>
 
 void	key_z_r_i(int keycode, t_vars *vars)
 {

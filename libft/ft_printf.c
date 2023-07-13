@@ -6,13 +6,12 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 13:32:01 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/28 13:05:32 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:52:36 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdarg.h>
-#include <stdio.h>
 #include <unistd.h>
 
 static ssize_t	write_format(va_list *ap, const char *fmt)
