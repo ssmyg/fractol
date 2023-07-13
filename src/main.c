@@ -6,22 +6,17 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 15:09:20 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:16:37 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libft.h"
 #include "mlx.h"
+#include "window.h"
 #include <limits.h>
 #include <stdio.h> // 後で消す
 #include <stdlib.h>
-
-void	to_z(int w, int h, double z[], t_vars *vars)
-{
-	z[0] = ((double)(w - vars->win_w / 2 + vars->dx)) / vars->scale * 0.005;
-	z[1] = -((double)(h - vars->win_h / 2 + vars->dy)) / vars->scale * 0.005;
-}
 
 char	*message(void)
 {

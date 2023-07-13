@@ -6,12 +6,15 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 14:53:33 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:18:44 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "keyboard.h"
 #include "mlx.h"
+#include "mouse.h"
+#include "window.h"
 #include <stdlib.h>
 
 void	init_vars(t_vars *vars)
@@ -23,8 +26,8 @@ void	init_vars(t_vars *vars)
 	vars->down_x = 0.0;
 	vars->down_y = 0.0;
 	vars->keycode = 0;
-	vars->win_w = WINDOW_W;
-	vars->win_h = WINDOW_H;
+	vars->win_w = WINDOW_WIDTH;
+	vars->win_h = WINDOW_HEIGHT;
 	vars->color = 120;
 	vars->model = NULL;
 	vars->img.img = NULL;

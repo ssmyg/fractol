@@ -6,12 +6,13 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 11:19:56 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:15:39 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx.h"
+#include "model.h"
 #include <limits.h>
 #include <math.h>
 
@@ -23,14 +24,6 @@ char	*get_pixel(int x, int y, t_data *img)
 static int	is_complete(t_vars *vars)
 {
 	return (vars->progress >= vars->win_h * vars->win_w - 1);
-}
-
-static void	init_loop(t_vars *vars, int loop)
-{
-	vars->progress = 0;
-	vars->loop = loop;
-	if (loop < 0 || 1000000 < loop)
-		vars->loop = 1000000;
 }
 
 static int	calc_pixel(int n, t_vars *vars)

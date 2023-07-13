@@ -6,11 +6,12 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 13:47:07 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:16:10 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "model.h"
 #include <math.h>
 
 int	julia(int w, int h, t_vars *vars)

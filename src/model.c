@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   model.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:15:28 by susumuyagi       ###   ########.fr       */
+/*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
+/*   Updated: 2023/07/13 16:13:53 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "model.h"
 
-int	mandelbrot(int w, int h, t_vars *vars)
+void	to_z(int w, int h, double z[], t_vars *vars)
 {
-	int		count;
-	double	c[2];
-	double	z[2];
-	double	tmp;
+	z[0] = ((double)(w - vars->win_w / 2 + vars->dx)) / vars->scale * 0.005;
+	z[1] = -((double)(h - vars->win_h / 2 + vars->dy)) / vars->scale * 0.005;
+}
 
-	to_z(w, h, c, vars);
-	count = 0;
-	z[0] = 0;
-	z[1] = 0;
-	while (z[0] * z[0] + z[1] * z[1] < MAX_Z && count < vars->loop)
-	{
-		tmp = z[0] * z[0] - z[1] * z[1] + c[0];
-		z[1] = 2.0 * z[0] * z[1] + c[1];
-		z[0] = tmp;
-		count++;
-	}
-	if (count == vars->loop)
-		return (-1);
-	return (count);
+void	init_loop(t_vars *vars, int loop)
+{
+	vars->progress = 0;
+	vars->loop = loop;
+	if (loop < 0 || 1000000 < loop)
+		vars->loop = 1000000;
 }

@@ -6,11 +6,12 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/12 16:20:31 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/13 16:16:24 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "model.h"
 #include <math.h>
 
 int	func(double x, double y, int depth, int max)

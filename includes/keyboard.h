@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:15:28 by susumuyagi       ###   ########.fr       */
+/*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
+/*   Updated: 2023/07/13 15:56:38 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
+
 #include "fractol.h"
-#include "model.h"
 
-int	mandelbrot(int w, int h, t_vars *vars)
-{
-	int		count;
-	double	c[2];
-	double	z[2];
-	double	tmp;
+// keyboard
+#define KEY_0 29
+#define KEY_C 8
+#define KEY_R 15
+#define KEY_I 34
+#define KEY_Z 6
+#define KEY_ESC 53
+#define KEY_LEFT 123
+#define KEY_RIGHT 124
+#define KEY_DOWN 125
+#define KEY_UP 126
 
-	to_z(w, h, c, vars);
-	count = 0;
-	z[0] = 0;
-	z[1] = 0;
-	while (z[0] * z[0] + z[1] * z[1] < MAX_Z && count < vars->loop)
-	{
-		tmp = z[0] * z[0] - z[1] * z[1] + c[0];
-		z[1] = 2.0 * z[0] * z[1] + c[1];
-		z[0] = tmp;
-		count++;
-	}
-	if (count == vars->loop)
-		return (-1);
-	return (count);
-}
+int key_hook(int keycode, t_vars* vars);
+
+#endif
