@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:18:28 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 15:41:52 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "fractol.h"
 
-# define WINDOW_WIDTH 700
-# define WINDOW_HEIGHT 500
-// # define WINDOW_W 1980
-// # define WINDOW_H 1080
+//# define WINDOW_WIDTH 700
+//# define WINDOW_HEIGHT 500
+ # define WINDOW_WIDTH 1980
+ # define WINDOW_HEIGHT 1080
 
 enum
 {

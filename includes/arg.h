@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:54:13 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 15:54:17 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "fractol.h"
 
-int		set_arg(int argc, char *argv[], t_vars *vars);
-void	print_usage(void);
+int	set_arg(int argc, char *argv[], t_vars *vars);
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:48:22 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 15:45:38 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color.h"
 #include "fractol.h"
+#include "render.h"
 #include "mlx.h"
 #include "model.h"
 #include <limits.h>
@@ -33,7 +34,6 @@ static int	calc_pixel(int n, t_vars *vars)
 	int		i;
 	int		j;
 	int		count;
-	int		color;
 
 	i = n % vars->win_w;
 	j = n / vars->win_w;
@@ -42,11 +42,16 @@ static int	calc_pixel(int n, t_vars *vars)
 	{
 		count = vars->model(i, j, vars);
 		if (count >= 0)
-			color = hsv2rgb(vars->color + sqrt(count * 10) * 10, 255, 255);
+		{
+			*(unsigned int *)dst = hsv2rgb(vars->color + sqrt(count * 10) * 10,
+				255, 255);
+			return (count);
+		}
 		else
-			color = 0;
-		*(unsigned int *)dst = color;
-		return (vars->loop);
+		{
+			*(unsigned int *)dst = 0;
+			return (vars->loop);
+		}
 	}
 	return (1);
 }
@@ -60,7 +65,7 @@ int	render_frame(t_vars *vars)
 	n = vars->progress;
 	while (n < vars->win_h * vars->win_w)
 	{
-		if (is_complete(vars) || count > 6000000)
+		if (is_complete(vars) || count > OPE_PER_FLAME)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 			if (is_complete(vars))

@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:08:16 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 17:34:21 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:26 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	key_zric(int keycode, t_vars *vars)
 		vars->keycode = KEY_C;
 }
 
-void	key_arrow(int keycode, t_vars *vars)
+static void	key_arrow(int keycode, t_vars *vars)
 {
 	if (KEY_LEFT <= keycode && keycode <= KEY_UP)
 	{

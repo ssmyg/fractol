@@ -6,14 +6,13 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:22:33 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:54:07 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 15:53:54 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libft.h"
 #include "model.h"
-#include <string.h>
 
 static int	set_model(char *str, t_vars *vars)
 {
@@ -48,10 +47,10 @@ static int	valid_f_format(char *str)
 	return (1);
 }
 
-static int	strtof(char *str, long double *x)
+static int	strtof(char *str, double *x)
 {
-	int			sign;
-	long double	ret;
+	int		sign;
+	double	ret;
 
 	if (!valid_f_format(str))
 		return (1);
@@ -74,7 +73,7 @@ static int	strtof(char *str, long double *x)
 
 int	set_arg(int argc, char *argv[], t_vars *vars)
 {
-	long double	x;
+	double	x;
 
 	if (argc == 1)
 		return (1);
@@ -93,29 +92,4 @@ int	set_arg(int argc, char *argv[], t_vars *vars)
 		vars->c[1] = x;
 	}
 	return (0);
-}
-
-void	print_usage(void)
-{
-	ft_putstr("\
-SYNOPSIS\n\
-	fractol model [param1] [param2]\n\
-\n\
-DESCRIPTION\n\
-	model	(mandelbrot | julia | sierpinski)\n\
-	param1	parameter1 for Julia set (real part)\n\
-	param2	parameter2 for Julia set (imaginary part)\n\
-\n\
-PARAMETER\n\
-	Parameters are used only if Julia is selected as the model.\n\
-\n\
-	format	\"(+|-)d.dddd\" (e.g. +1.2345)\n\
-	range	-2.0000 <= param <= +2.0000)\n\
-\n\
-USAGE\n\
-	arrow	move the view\n\
-	ESC	close window\n\
-	s	shift color range\n\
-	0	Restore the view to its initial state\n\
-\n");
 }
