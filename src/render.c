@@ -6,15 +6,15 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/14 15:45:38 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/14 16:07:47 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color.h"
 #include "fractol.h"
-#include "render.h"
 #include "mlx.h"
 #include "model.h"
+#include "render.h"
 #include <limits.h>
 #include <math.h>
 
@@ -44,7 +44,7 @@ static int	calc_pixel(int n, t_vars *vars)
 		if (count >= 0)
 		{
 			*(unsigned int *)dst = hsv2rgb(vars->color + sqrt(count * 10) * 10,
-				255, 255);
+					255, 255);
 			return (count);
 		}
 		else
@@ -89,6 +89,6 @@ void	drow_img(t_vars *vars)
 		mlx_destroy_image(vars->mlx, img->img);
 	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-		&img->line_length, &img->endian);
+			&img->line_length, &img->endian);
 	render_frame(vars);
 }
