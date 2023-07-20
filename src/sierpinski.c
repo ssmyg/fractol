@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/19 18:18:23 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/07/20 09:23:01 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	sierpinski(int w, int h, t_vars *vars)
 	double	c[2];
 
 	to_z(w, h, c, vars);
-	c[0] = c[0] - sqrt(3) * c[1] / 3.0;
+	c[0] = c[0] - sqrt(3) * c[1] / 3.0 + 0.5;
 	c[1] = 2.0 * sqrt(3) / 3.0 * c[1];
 	max = log2(vars->scale) + 6;
 	return (func(c[0], c[1], 0, max));
