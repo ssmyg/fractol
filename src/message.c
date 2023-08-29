@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:22:33 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/17 10:55:29 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/08/29 17:23:11 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ PARAMETER\n\
 	Parameters are used only if Julia is selected as the model.\n\
 \n\
 	length	9 characters or less\n\
-	range	-2.0 <= param <= +2.0)\n\
+	range	-2.0 <= param <= +2.0\n\
 \n");
 }
 

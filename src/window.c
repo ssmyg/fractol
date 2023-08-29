@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:51:12 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/08/29 17:05:33 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_vars(t_vars *vars)
 	vars->win_h = WINDOW_HEIGHT;
 	vars->color = 120;
 	vars->model = NULL;
+	vars->is_julia = 0;
 	vars->img.img = NULL;
 	vars->c[0] = -0.30;
 	vars->c[1] = -0.63;

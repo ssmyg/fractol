@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:22:33 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/17 11:02:20 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/08/29 17:10:44 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	set_model(char *str, t_vars *vars)
 	if (!ft_strcmp(str, "mandelbrot"))
 		vars->model = mandelbrot;
 	else if (!ft_strcmp(str, "julia"))
+	{
 		vars->model = julia;
+		vars->is_julia = 1;
+	}
 	else if (!ft_strcmp(str, "sierpinski"))
 		vars->model = sierpinski;
 	else
@@ -108,6 +111,8 @@ int	set_arg(int argc, char *argv[], t_vars *vars)
 		return (1);
 	if (set_model(argv[1], vars))
 		return (1);
+	if (argc >= 3 && !vars->is_julia)
+		return (1);
 	if (argc >= 3)
 	{
 		if (strtof(argv[2], &x))
@@ -120,5 +125,7 @@ int	set_arg(int argc, char *argv[], t_vars *vars)
 			return (1);
 		vars->c[1] = x;
 	}
+	if (argc >= 5)
+		return (1);
 	return (0);
 }

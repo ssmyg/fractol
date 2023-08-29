@@ -24,10 +24,10 @@ $(NAME): $(OBJS) $(MINILIBX) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -j4 -C $(LIBFT_DIR)
 
 $(MINILIBX):
-	$(MAKE) -C $(MINILIBX_DIR)
+	$(MAKE) -j4 -C $(MINILIBX_DIR)
 
 .PHONY: clean fclean re
 

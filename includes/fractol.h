@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/14 16:12:47 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/08/29 17:04:54 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct					s_vars
 
 	int					color;
 	int					(*model)(int, int, t_vars *);
+	int					is_julia;
 	double				c[2];
 };
 
