@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 14:25:20 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 14:50:24 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	calc_pixel(int n, t_vars *vars)
 		if (count >= 0)
 		{
 			*(unsigned int *)dst = hsv2rgb(vars->color + sqrt(vars->count[n]
-					* 10) * 10, 255, 255);
+						* 10) * 10, 255, 255);
 			return (count);
 		}
 		else
