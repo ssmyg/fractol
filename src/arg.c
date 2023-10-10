@@ -6,10 +6,11 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:22:33 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/08/29 17:10:44 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 15:21:20 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "arg.h"
 #include "fractol.h"
 #include "libft.h"
 #include "model.h"
@@ -27,7 +28,7 @@ static int	set_model(char *str, t_vars *vars)
 	else if (!ft_strcmp(str, "sierpinski"))
 		vars->model = sierpinski;
 	else
-		return (1);
+		return (INVALID_ARG);
 	return (0);
 }
 
@@ -36,26 +37,26 @@ static int	invalid_f_format(char *str)
 	int	dot_num;
 
 	if (ft_strlen(str) > 9)
-		return (1);
+		return (INVALID_ARG);
 	if (*str == '+' || *str == '-')
 		str++;
 	if (*str == '\0')
-		return (1);
+		return (INVALID_ARG);
 	if (*str == '.')
-		return (1);
+		return (INVALID_ARG);
 	dot_num = 0;
 	while (*str)
 	{
 		if (*str == '.')
 			dot_num++;
 		else if (*str < '0' || '9' < *str)
-			return (1);
+			return (INVALID_ARG);
 		str++;
 	}
 	if (*(--str) == '.')
-		return (1);
+		return (INVALID_ARG);
 	if (dot_num >= 2)
-		return (1);
+		return (INVALID_ARG);
 	return (0);
 }
 
@@ -88,7 +89,7 @@ static int	strtof(char *str, double *x)
 	double	ret;
 
 	if (invalid_f_format(str))
-		return (1);
+		return (INVALID_ARG);
 	sign = 1;
 	if (*str == '-' || *str == '+')
 	{
@@ -98,7 +99,7 @@ static int	strtof(char *str, double *x)
 	}
 	ret = tof(str, sign);
 	if (ret < -2.0 || 2.0 < ret)
-		return (1);
+		return (INVALID_ARG);
 	*x = ret;
 	return (0);
 }
@@ -108,24 +109,24 @@ int	set_arg(int argc, char *argv[], t_vars *vars)
 	double	x;
 
 	if (argc == 1)
-		return (1);
+		return (INVALID_ARG);
 	if (set_model(argv[1], vars))
-		return (1);
+		return (INVALID_ARG);
 	if (argc >= 3 && !vars->is_julia)
-		return (1);
+		return (INVALID_ARG);
 	if (argc >= 3)
 	{
 		if (strtof(argv[2], &x))
-			return (1);
+			return (INVALID_ARG);
 		vars->c[0] = x;
 	}
 	if (argc >= 4)
 	{
 		if (strtof(argv[3], &x))
-			return (1);
+			return (INVALID_ARG);
 		vars->c[1] = x;
 	}
 	if (argc >= 5)
-		return (1);
+		return (INVALID_ARG);
 	return (0);
 }
