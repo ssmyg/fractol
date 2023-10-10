@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:16:10 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 14:42:45 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ int	julia(int w, int h, t_vars *vars)
 {
 	int		count;
 	double	c[2];
-	double	z[2];
+	double	*z;
 	double	tmp;
 
+	// double	z[2];
 	to_z(w, h, c, vars);
 	count = 0;
-	z[0] = c[0];
-	z[1] = c[1];
+	if (vars->count[h * WINDOW_WIDTH + w] == 0)
+	{
+		vars->z[(h * WINDOW_WIDTH + w) * 2 + 0] = c[0];
+		vars->z[(h * WINDOW_WIDTH + w) * 2 + 1] = c[1];
+	}
+	z = &(vars->z[(h * WINDOW_WIDTH + w) * 2]);
 	while (z[0] * z[0] + z[1] * z[1] < MAX_Z && count < vars->loop)
 	{
 		tmp = z[0] * z[0] - z[1] * z[1] + vars->c[0];
@@ -32,6 +37,7 @@ int	julia(int w, int h, t_vars *vars)
 		z[0] = tmp;
 		count++;
 	}
+	vars->count[h * WINDOW_WIDTH + w] += count;
 	if (count == vars->loop)
 		return (-1);
 	return (count);
