@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/14 16:07:47 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 14:25:20 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*get_pixel(int x, int y, t_data *img)
 
 static int	is_complete(t_vars *vars)
 {
-	return (vars->progress >= vars->win_h * vars->win_w - 1);
+	return (vars->progress >= WINDOW_HEIGHT * WINDOW_WIDTH - 1);
 }
 
 static int	calc_pixel(int n, t_vars *vars)
@@ -35,16 +35,16 @@ static int	calc_pixel(int n, t_vars *vars)
 	int		j;
 	int		count;
 
-	i = n % vars->win_w;
-	j = n / vars->win_w;
+	i = n % WINDOW_WIDTH;
+	j = n / WINDOW_WIDTH;
 	dst = get_pixel(i, j, &vars->img);
 	if (*dst == 0)
 	{
 		count = vars->model(i, j, vars);
 		if (count >= 0)
 		{
-			*(unsigned int *)dst = hsv2rgb(vars->color + sqrt(count * 10) * 10,
-					255, 255);
+			*(unsigned int *)dst = hsv2rgb(vars->color + sqrt(vars->count[n]
+					* 10) * 10, 255, 255);
 			return (count);
 		}
 		else
@@ -63,13 +63,13 @@ int	render_frame(t_vars *vars)
 
 	count = 0;
 	n = vars->progress;
-	while (n < vars->win_h * vars->win_w)
+	while (n < WINDOW_HEIGHT * WINDOW_WIDTH)
 	{
 		if (is_complete(vars) || count > OPE_PER_FLAME)
 		{
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 			if (is_complete(vars))
-				init_loop(vars, vars->loop * 2);
+				init_loop(vars, 0);
 			return (0);
 		}
 		count += calc_pixel(n, vars);
@@ -87,7 +87,7 @@ void	drow_img(t_vars *vars)
 	img = &vars->img;
 	if (img->img)
 		mlx_destroy_image(vars->mlx, img->img);
-	img->img = mlx_new_image(vars->mlx, vars->win_w, vars->win_h);
+	img->img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	render_frame(vars);

@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/08/29 17:05:33 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 14:14:33 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	init_vars(t_vars *vars)
 	vars->down_x = 0.0;
 	vars->down_y = 0.0;
 	vars->keycode = 0;
-	vars->win_w = WINDOW_WIDTH;
-	vars->win_h = WINDOW_HEIGHT;
 	vars->color = 120;
 	vars->model = NULL;
 	vars->is_julia = 0;
@@ -40,7 +38,8 @@ void	init_vars(t_vars *vars)
 void	init_window(t_vars *vars)
 {
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, vars->win_w, vars->win_h, "fractol");
+	vars->win = mlx_new_window(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
+			"fractol");
 }
 
 void	set_hooks(t_vars *vars)

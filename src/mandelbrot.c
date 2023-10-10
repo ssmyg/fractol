@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/07/13 16:15:28 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 14:19:19 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ int	mandelbrot(int w, int h, t_vars *vars)
 {
 	int		count;
 	double	c[2];
-	double	z[2];
+	double	*z;
 	double	tmp;
 
 	to_z(w, h, c, vars);
 	count = 0;
-	z[0] = 0;
-	z[1] = 0;
+	z = &(vars->z[(h * WINDOW_WIDTH + w) * 2]);
 	while (z[0] * z[0] + z[1] * z[1] < MAX_Z && count < vars->loop)
 	{
 		tmp = z[0] * z[0] - z[1] * z[1] + c[0];
@@ -31,6 +30,7 @@ int	mandelbrot(int w, int h, t_vars *vars)
 		z[0] = tmp;
 		count++;
 	}
+	vars->count[h * WINDOW_WIDTH + w] += count;
 	if (count == vars->loop)
 		return (-1);
 	return (count);
