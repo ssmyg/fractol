@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:10:59 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 14:14:19 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/10 15:15:58 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	scroll_up(int x2, int y2, t_vars *vars)
 			vars->c[1] -= 4.0;
 	}
 	else if (vars->keycode == KEY_C)
-		vars->color = (vars->color + 1) % 360;
+		vars->color = (vars->color + 7) % 360;
 	else
 	{
 		vars->scale *= ZOOM_RATE;
@@ -85,6 +85,8 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 	int	x2;
 	int	y2;
 
+	if (x < 0 || WINDOW_WIDTH < x || y < 0 || WINDOW_HEIGHT < y)
+		return (0);
 	x2 = x - WINDOW_WIDTH / 2;
 	y2 = y - WINDOW_HEIGHT / 2;
 	if (key == SCROLL_UP)
