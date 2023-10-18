@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/18 17:57:24 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/18 18:48:55 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # include "fractol.h"
 
-// # define ZOOM_RATE 1.25
-# define ZOOM_RATE 2.0
+# define ZOOM_RATE 1.25
 
 // mouse
 # define MOUSE_LEFT 1

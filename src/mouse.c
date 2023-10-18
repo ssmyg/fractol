@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:10:59 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/18 17:52:31 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/18 18:50:18 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	scroll_up(int x2, int y2, t_vars *vars)
 	else
 	{
 		vars->scale *= ZOOM_RATE;
-		vars->dx = vars->dx - x2 / vars->scale;
-		vars->dy = vars->dy + y2 / vars->scale;
+		vars->dx = vars->dx - x2 / vars->scale * (ZOOM_RATE - 1.0);
+		vars->dy = vars->dy + y2 / vars->scale * (ZOOM_RATE - 1.0);
 	}
 	drow_img(vars);
 }
@@ -78,8 +78,8 @@ void	scroll_down(int x2, int y2, t_vars *vars)
 	}
 	else
 	{
-		vars->dx = vars->dx + x2 / vars->scale;
-		vars->dy = vars->dy - y2 / vars->scale;
+		vars->dx = vars->dx + x2 / vars->scale * (ZOOM_RATE - 1.0);
+		vars->dy = vars->dy - y2 / vars->scale * (ZOOM_RATE - 1.0);
 		vars->scale /= ZOOM_RATE;
 	}
 	drow_img(vars);
