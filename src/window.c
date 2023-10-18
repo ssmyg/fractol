@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:55 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 14:14:33 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/18 17:49:35 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 void	init_vars(t_vars *vars)
 {
-	vars->scale = 1.0;
+	vars->scale = 200.0;
 	vars->dx = 0.0;
 	vars->dy = 0.0;
 	vars->is_down = 0;

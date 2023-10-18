@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:11:44 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 14:20:05 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/18 17:44:11 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	to_z(int w, int h, double z[], t_vars *vars)
 {
-	z[0] = ((double)(w - WINDOW_WIDTH / 2 + vars->dx)) / vars->scale * 0.005;
-	z[1] = -((double)(h - WINDOW_HEIGHT / 2 + vars->dy)) / vars->scale * 0.005;
+	z[0] = (double)(w - WINDOW_WIDTH / 2) / vars->scale - vars->dx;
+	z[1] = -(double)(h - WINDOW_HEIGHT / 2) / vars->scale - vars->dy;
 }
 
 void	init_loop(t_vars *vars, int loop)

@@ -1,5 +1,5 @@
 NAME=fractol
-CFLAGS=-Wall -Wextra -Werror -O3
+CFLAGS=-Wall -Wextra -Werror -pipe -march=native -Ofast
 SRC_DIR=.
 SRCS=src/main.c src/color.c src/keyboard.c src/mouse.c src/window.c src/render.c \
 	src/mandelbrot.c src/julia.c src/sierpinski.c src/arg.c src/model.c src/message.c
