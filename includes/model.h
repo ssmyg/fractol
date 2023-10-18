@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 11:22:09 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/10/18 19:03:05 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define INIT_LOOP 50
 # define MAX_Z 4.000001
 
-void	to_z(int w, int h, double z[], t_vars *vars);
+void	to_z(int w, int h, long double z[], t_vars *vars);
 void	init_loop(t_vars *vars, int loop);
 
 int		mandelbrot(int w, int h, t_vars *vars);
