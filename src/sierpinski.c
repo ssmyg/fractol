@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/11/08 15:26:51 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:40:02 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "model.h"
 #include <math.h>
 
-int	func(long double x, long double y, int depth, int max)
+static int	func(double x, double y, int depth, int max)
 {
-	long double	t;
+	double	t;
 
 	t = pow(0.5, depth);
 	if (depth > max)
@@ -44,9 +44,9 @@ int	func(long double x, long double y, int depth, int max)
 // = 1/3 [[3, -sqrt(3)], [0, 2 * sqrt(3)]]
 int	sierpinski(int w, int h, t_vars *vars)
 {
-	int			max;
-	long double	c[2];
-	int			count;
+	int		max;
+	double	c[2];
+	int		count;
 
 	to_z(w, h, c, vars);
 	c[0] = c[0] - sqrt(3) * c[1] / 3.0 + 0.5;

@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:22:33 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/18 19:19:39 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:39:37 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ static int	invalid_f_format(char *str)
 	return (0);
 }
 
-static long double	tof(char *str, int sign)
+static double	tof(char *str, int sign)
 {
-	long double	ret;
-	int			dot_position;
-	int			i;
+	double	ret;
+	int		dot_position;
+	int		i;
 
 	i = 0;
 	ret = 0;
@@ -83,10 +83,10 @@ static long double	tof(char *str, int sign)
 	return (ret);
 }
 
-static int	strtof(char *str, long double *x)
+static int	strtof(char *str, double *x)
 {
-	int			sign;
-	long double	ret;
+	int		sign;
+	double	ret;
 
 	if (invalid_f_format(str))
 		return (INVALID_ARG);
@@ -106,7 +106,7 @@ static int	strtof(char *str, long double *x)
 
 int	set_arg(int argc, char *argv[], t_vars *vars)
 {
-	long double	x;
+	double	x;
 
 	if (argc == 1)
 		return (INVALID_ARG);
