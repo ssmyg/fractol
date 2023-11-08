@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:40 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/18 19:03:05 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:26:20 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	julia(int w, int h, t_vars *vars)
 {
-	int		count;
+	int			count;
 	long double	c[2];
 	long double	*z;
 	long double	tmp;
