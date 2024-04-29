@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:15:02 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/10/10 14:50:24 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2024/04/29 15:27:35 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	render_frame(t_vars *vars)
 				init_loop(vars, 0);
 			return (0);
 		}
-		count += calc_pixel(n, vars);
+		count += calc_pixel(17 * n % (WINDOW_HEIGHT * WINDOW_WIDTH), vars);
 		vars->progress = n;
 		n++;
 	}

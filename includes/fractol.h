@@ -6,15 +6,19 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:20:13 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/11/08 15:39:23 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2024/04/29 15:28:38 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WINDOW_WIDTH 720
-# define WINDOW_HEIGHT 480
+// # define WINDOW_WIDTH 720
+// # define WINDOW_HEIGHT 480
+// # define WINDOW_WIDTH 1280
+// # define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
 typedef struct s_data
 {
@@ -50,8 +54,8 @@ struct					s_vars
 	int					(*model)(int, int, t_vars *);
 	int					is_julia;
 	double				c[2];
-	double				z[WINDOW_WIDTH * WINDOW_HEIGHT * 2];
-	int					count[WINDOW_WIDTH * WINDOW_HEIGHT];
+	double				*z;
+	int					*count;
 };
 
 #endif
